@@ -1,3 +1,4 @@
+/views/*
 config.php
 routes.php
 schedule-*
