@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Channel;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\facades\schema;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,8 +38,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+<<<<<<< HEAD
         schema::defaultStringLength(191);
 
        
+=======
+        Schema::defaultStringLength(191);
+>>>>>>> 891562de528280b80926da7bc71452960794d84c
     }
 }
