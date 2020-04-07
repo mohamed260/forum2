@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ThreadFilters;
 use App\Thread;
 use App\Channel;
 use Illuminate\Http\Request;
@@ -22,17 +23,13 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($channelSlug = null)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
-        if($channelSlug){
-            $channelId = Channel::where('slug', $channelSlug)->first()->id;
+        $threads = $this->getThreads($channel, $filters);
 
-            $threads = Thread::where('channel_id', $channelId)->latest()->get();
-        }else{
-            $threads = Thread::latest()->get();
+        if (request()->wantsJson()){
+            return $threads;
         }
-
-       
 
         return view('threads.index', compact('threads'));
     }
@@ -78,9 +75,12 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread)
+    public function show($channel, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(20)
+        ]);
     }
 
     /**
@@ -112,8 +112,28 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+       $this->authorize('update', $thread);
+
+        $thread->delete();
+
+        if(request()->wantsJson()){
+            return response([], 204);
+        }
+
+        return redirect('/threads');
+    }
+
+    public function getThreads(Channel $channel, ThreadFilters $filters)
+    {
+        $threads = Thread::latest()->filter($filters);
+
+        if($channel->exists){
+            $threads->where('channel_id', $channel->id);
+        }
+
+
+        return $threads->get();
     }
 }
