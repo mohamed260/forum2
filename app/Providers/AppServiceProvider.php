@@ -15,20 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \View::composer('*', function($view){
-
-            $channels = \Cache::rememberForever('channels', function (){
-                return Channel::all();
-            });
-
-            $view->with('channels', $channels);
-        });
-
-        if($this->app->isLocal()){
+        if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
-
-
     }
 
     /**
@@ -38,12 +27,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-<<<<<<< HEAD
-        schema::defaultStringLength(191);
-
-       
-=======
         Schema::defaultStringLength(191);
->>>>>>> 891562de528280b80926da7bc71452960794d84c
+
+        view()->composer('*', function ($view) {
+            $channel = \Cache::rememberForever('channel', function () {
+                return Channel::all();
+            });
+
+            $view->with('channels', $channel);
+        });
     }
 }

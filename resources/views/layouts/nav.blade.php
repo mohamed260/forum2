@@ -18,13 +18,13 @@
                             aria-expanded="false">Browse <span class="caret"></span></a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="/threads/">All Threads</a></li>
+                                <li><a class="dropdown-item" href="/threads/">All Threads</a></li>
                                 @if (auth()->check())
-                                    <li><a href="/threads?by={{ auth()->user()->name }}">My Threads</a></li>
+                                    <li><a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">My Threads</a></li>
                                 @endif
 
                                 <li>
-                                    <a href="/threads?popular=1">Popular Threads</a>
+                                    <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
                                 </li>
                                 
                             </ul>
@@ -38,7 +38,7 @@
 
                             <ul class="dropdown-menu">
                                 @foreach ($channels as $channel)
-                                    <li><a href="/threads/{{ $channel->slug }}">{{ $channel->name }}</li>
+                                    <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a>
                                 @endforeach
                             </ul>
                         </li>
@@ -51,13 +51,6 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-
-                            @auth
-                            <li>
-                                <a href="/profiles/{{ $thread->id }}">My Profile</a>
-                            </li>
-                            @endauth
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
@@ -76,6 +69,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/profiles/{{ auth()->user()->name }}">My Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

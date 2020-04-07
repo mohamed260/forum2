@@ -66,7 +66,7 @@
                     <p>
                         This Thread Was Published {{ $thread->created_at->diffForHumans() }} By 
                         <a href="#">{{ $thread->creator->name }}</a>, And Currently Has {{ $thread->replies_count }} 
-                        {{str_plural('comment', $thread->replies_count)}} .
+                        {{Str::plural('comment', $thread->replies_count)}} .
                     </p>
                 </div>
             </div>
