@@ -7,18 +7,18 @@
                 <div class="page-header">
                     <h1>
                         {{ $profileUser->name }}
-                        <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
+                        
                     </h1>
                 </div>
                 <hr>
-                @foreach ($activities as $activity)
-                    @include ("profiles.activities.{$activity->type}")
+                @foreach ($activities as $date => $activity)
+                    <h3 class="page-header">{{ $date }}</h3>
+                    <hr>
+                    @foreach($activity as $record)
+                        @include ("profiles.activities.{$record->type}", ['activity' => $record])
+                    @endforeach
                     <br>
                 @endforeach
-
-                {{-- {{ $threads->links() }} --}}
-
-            </div>
         </div>
     </div>
 @endsection

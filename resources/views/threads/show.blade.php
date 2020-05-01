@@ -12,16 +12,16 @@
                             {{ $thread->creator->name }}
                             </a> Posted:
                             {{ $thread->title }}
-                        </span>
+                        
 
                         @can ('update', $thread)
                             <form action="{{ $thread->path() }}" method="POST">
                                 @csrf
                                 {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-link">Delete Thread</button>
+                                <button type="submit" class="btn btn-link" style="float : right;">Delete Thread</button>
                             </form>
                         @endcan
-                        
+                        </span>
                     </div>
                 </div>
 

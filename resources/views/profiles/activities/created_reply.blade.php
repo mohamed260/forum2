@@ -1,21 +1,12 @@
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="level">
-                                <span class="flex">
-                                    {{ $profileUser->name }} replyed to thread
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-
-                            {{ $activity->subject->body }}
-
-                        </div>
-                    </div>
-
+@component('profiles.activities.activity')
+    @slot('heading')
+        {{ $profileUser->name }} replyed to 
+        <a href="{{ $activity->subject->thread->path() }}">
+            '{{ $activity->subject->thread->title }}'
+        </a>
+    @endslot
+    @slot('heading')
+        {{ $activity->subject->body }}
+    @endslot
+@endcomponent
+ 
