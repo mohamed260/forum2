@@ -4,7 +4,7 @@
             <a href="{{ $activity->subject->path() }}">{{ $activity->subject->title }}
         </a>
     @endslot
-    @slot('heading')
+    @slot('body')
         {{ $activity->subject->body }}
     @endslot
 @endcomponent

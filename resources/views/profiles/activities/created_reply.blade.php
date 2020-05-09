@@ -5,7 +5,7 @@
             '{{ $activity->subject->thread->title }}'
         </a>
     @endslot
-    @slot('heading')
+    @slot('body')
         {{ $activity->subject->body }}
     @endslot
 @endcomponent
